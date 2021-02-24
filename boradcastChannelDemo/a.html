@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="msg1"></div>
+    <input />
+    <button>发送</button>
+    <button>停止</button>
+    <script type="text/javascript" src="index.js"></script>
+    <script>
+        const bc1 = new BroadcastChannel(
+            'zzk'
+        );
+        bc1.onmessage = function (e) {
+            const containerTag = "msg1";
+            const msg = "小强: " + e.data;
+            setMsgList(msg, containerTag);
+        }
+        var btn = document.getElementsByTagName("button")[0];
+        btn.onclick = function () {
+            var text = document.getElementsByTagName("input")[0].value;
+            bc1.postMessage(text);//向子线程发送message事件
+            const containerTag = "msg1";
+            const msg = "我: " + text;
+            setMsgList(msg, containerTag);
+        }
+    </script>
+</body>
+
+</html>
